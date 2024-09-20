@@ -1,0 +1,19 @@
+.post-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.input-box {
+  width: 90%;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.send-btn {
+  border-radius: 10px;
+  border: none;
+  background-color: green;
+  padding: 10px 20px 10px 20px;
+}
