@@ -4,7 +4,9 @@ import postRouter from "./modules/posts/post-services";
 
 const port = process.env.PORT || "4000";
 
-const app = express().use(cors()).use(express.json());
+const app = express()
+  .use(cors({ origin: "http://localhost:4200" }))
+  .use(express.json());
 
 app.use("/posts", postRouter);
 

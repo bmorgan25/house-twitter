@@ -1,7 +1,8 @@
 <div class="app-container">
   <div class="card-section">
-    <app-post-card />
-    <app-post-card />
+    <div *ngFor="let post of postData">
+      <app-post-card [post]="post" />
+    </div>
   </div>
   <div class="input-field">
     <app-input-field />
