@@ -1,0 +1,12 @@
+<form (ngSubmit)="onSubmit()">
+  <div class="post-box">
+    <input
+      type="text"
+      class="input-box"
+      id="content"
+      name="content"
+      [(ngModel)]="postContent"
+    />
+    <button type="submit" class="send-btn">Submit</button>
+  </div>
+</form>

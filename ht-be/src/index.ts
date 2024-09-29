@@ -1,6 +1,7 @@
 import cors from "cors";
+import "dotenv/config";
 import express from "express";
-import postRouter from "./modules/posts/post-services";
+import postRouter from "./modules/posts/post-controller";
 
 const port = process.env.PORT || "4000";
 
