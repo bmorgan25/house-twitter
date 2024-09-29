@@ -28,30 +28,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.apiService.getAllPosts().subscribe((resp) => {
-      //resp.reverse();
-      this.postData = resp.map((post) => {
-        const date = new Date(post.timestamp);
-
-        const options: Intl.DateTimeFormatOptions = {
-          timeZone: 'America/New_York',
-          year: 'numeric',
-          month: '2-digit',
-          day: '2-digit',
-          hour: '2-digit',
-          minute: '2-digit',
-          hour12: true,
-        };
-
-        const formattedDate = new Intl.DateTimeFormat('en-US', options).format(
-          date
-        );
-
-        return {
-          ...post,
-          timestamp: formattedDate.replace(',', ''),
-        };
-      });
-    });
+    this.apiService.getAllPosts().subscribe((resp) => (this.postData = resp));
   }
 }
