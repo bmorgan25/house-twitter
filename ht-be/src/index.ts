@@ -11,6 +11,6 @@ const app = express()
 
 app.use("/posts", postRouter);
 
-app.listen(port, () => {
+app.listen(Number(port), "0.0.0.0", () => {
   console.log(`Express listening on port: ${port}`);
 });
