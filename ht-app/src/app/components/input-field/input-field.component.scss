@@ -9,11 +9,17 @@
   width: 90%;
   padding: 10px;
   border-radius: 10px;
+  border: solid 1px lightgray;
 }
 
 .send-btn {
   border-radius: 10px;
   border: none;
-  background-color: green;
+  background-color: #2e9b2e;
+  color: white;
   padding: 10px 20px 10px 20px;
+  &:hover {
+    cursor: pointer;
+    background-color: #63ce63;
+  }
 }
