@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ApiService } from '../../api/api.service';
 import { NewPost } from '../../data-types/types';
 
@@ -13,7 +14,7 @@ import { NewPost } from '../../data-types/types';
 export class InputFieldComponent {
   postContent = '';
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private router: Router) {}
 
   onSubmit() {
     const newPost: NewPost = {
@@ -22,6 +23,8 @@ export class InputFieldComponent {
       downvotes: 0,
     };
 
-    this.apiService.createPost(newPost).subscribe((resp) => console.log(resp));
+    this.apiService.createPost(newPost).subscribe(() => {
+      window.location.reload();
+    });
   }
 }

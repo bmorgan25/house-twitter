@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { MongoClient } from "mongodb";
+import { Db, MongoClient } from "mongodb";
 import pino from "pino";
 import { NewPost } from "../../types/types";
 
@@ -7,22 +7,26 @@ export class PostServices {
   logger = pino();
   router = Router();
   client: MongoClient;
+  db!: Db;
 
   constructor() {
     this.client = new MongoClient(process.env.DATABASE_CONN || "");
   }
 
+  async connectDb() {
+    if (!!this.client) {
+      this.db = this.client.db("house_twitter");
+    }
+  }
+
   async getAllPosts() {
     this.logger.info("User called post-services /");
 
-    await this.client.connect();
+    await this.connectDb();
 
-    const db = this.client.db("house_twitter");
-    const posts = db.collection("ht_posts");
+    const posts = this.db.collection("ht_posts");
 
     const allPosts = await posts.find({}).toArray();
-
-    await this.client.close();
 
     allPosts.sort(
       (a, b) =>
@@ -56,14 +60,15 @@ export class PostServices {
   async createPost(postData: NewPost) {
     this.logger.info("User called post-services /new-post");
 
-    await this.client.connect();
+    await this.connectDb();
 
-    const db = this.client.db("house_twitter");
-    const posts = db.collection("ht_posts");
+    const posts = this.db.collection("ht_posts");
 
     let newPost = postData as NewPost & { timestamp: string };
     newPost.timestamp = new Date().toISOString();
 
     const result = await posts.insertOne(newPost);
+
+    return result;
   }
 }
