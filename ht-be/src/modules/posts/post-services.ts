@@ -34,25 +34,9 @@ export class PostServices {
     );
 
     return allPosts.map((post) => {
-      const date = new Date(post.timestamp);
-
-      const options: Intl.DateTimeFormatOptions = {
-        timeZone: "America/New_York",
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true,
-      };
-
-      const formattedDate = new Intl.DateTimeFormat("en-US", options).format(
-        date
-      );
-
       return {
         ...post,
-        timestamp: formattedDate.replace(",", ""),
+        timestamp: this.setTimeFormat(post.timestamp),
       };
     });
   }
@@ -72,7 +56,7 @@ export class PostServices {
     return result;
   }
 
-  async changeUpvote(postId: string) {
+  async changeVote(postId: string, isUpvote: boolean) {
     this.logger.info("User called post-services /upvote");
 
     try {
@@ -80,14 +64,38 @@ export class PostServices {
 
       const posts = this.db.collection("ht_posts");
 
-      const results = await posts.updateOne(
+      const results = await posts.findOneAndUpdate(
         { _id: new ObjectId(postId) },
-        { $inc: { upvotes: 1 } }
+        { $inc: isUpvote ? { upvotes: 1 } : { downvotes: 1 } },
+        { returnDocument: "after" }
       );
-
-      return results;
+      if (results) {
+        return { ...results, timestamp: this.setTimeFormat(results.timestamp) };
+      } else {
+        return undefined;
+      }
     } catch (err) {
       this.logger.info(`There was an error: ${err}`);
     }
+  }
+
+  private setTimeFormat(timestamp: string) {
+    const date = new Date(timestamp);
+
+    const options: Intl.DateTimeFormatOptions = {
+      timeZone: "America/New_York",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    };
+
+    const formattedDate = new Intl.DateTimeFormat("en-US", options).format(
+      date
+    );
+
+    return formattedDate.replace(",", "");
   }
 }

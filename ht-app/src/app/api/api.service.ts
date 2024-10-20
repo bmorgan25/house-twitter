@@ -20,11 +20,11 @@ export class ApiService {
     return this.httpClient.post(`${this.apiUrl}/posts/new-post`, postData);
   }
 
-  upvotePost(postId: number) {
-    return this.httpClient.post(
-      `${this.apiUrl}/posts/upvote`,
+  votePost(postId: number, isUpvote: boolean): Observable<GetAllPostsResponse> {
+    return this.httpClient.post<GetAllPostsResponse>(
+      `${this.apiUrl}/posts/vote`,
       {},
-      { params: { postId: postId } }
+      { params: { postId: postId, isUpvote: isUpvote } }
     );
   }
 }
