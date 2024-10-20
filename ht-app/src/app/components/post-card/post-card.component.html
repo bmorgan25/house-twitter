@@ -1,4 +1,22 @@
 <div class="card-container">
   <div class="timestamp-header">{{ post.timestamp }}</div>
-  <div class="body-container">{{ post.content }}</div>
+  <div class="body-container">
+    <div class="up-down-votes">
+      <div class="votes">
+        <span (click)="handleUpvote()" class="icon-container">
+          <i class="icon-size" data-feather="chevron-up"></i>
+        </span>
+        <div>{{ post.upvotes }}</div>
+      </div>
+      <div class="votes">
+        <div>{{ post.downvotes }}</div>
+        <span (click)="handleDownvote()" class="icon-container">
+          <i class="icon-size" data-feather="chevron-down"></i>
+        </span>
+      </div>
+    </div>
+    <div class="post-text">
+      {{ post.content }}
+    </div>
+  </div>
 </div>

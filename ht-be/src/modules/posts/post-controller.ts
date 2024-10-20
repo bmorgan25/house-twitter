@@ -14,4 +14,10 @@ router.post("/new-post", async (req, res) => {
   res.send(newPostRes).status(204);
 });
 
+router.post("/upvote", async (req, res) => {
+  const postId = req.query.postId;
+  const upvotePost = await postServices.changeUpvote(postId as string);
+  res.send(upvotePost).status(204);
+});
+
 export default router;

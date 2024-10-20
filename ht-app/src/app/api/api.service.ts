@@ -19,4 +19,12 @@ export class ApiService {
   createPost(postData: NewPost) {
     return this.httpClient.post(`${this.apiUrl}/posts/new-post`, postData);
   }
+
+  upvotePost(postId: number) {
+    return this.httpClient.post(
+      `${this.apiUrl}/posts/upvote`,
+      {},
+      { params: { postId: postId } }
+    );
+  }
 }

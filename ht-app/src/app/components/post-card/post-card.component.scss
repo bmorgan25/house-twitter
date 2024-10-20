@@ -10,5 +10,42 @@
 }
 
 .body-container {
-  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  padding: 10px 10px 10px 0px;
+  align-items: center;
+}
+
+.up-down-votes {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.votes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: rgb(60, 87, 107);
+}
+
+.icon-size {
+  height: 30px;
+  width: 30px;
+  stroke: rgb(163 183 197);
+  stroke-width: 5px;
+  fill: none;
+}
+
+.post-text {
+  margin-left: 20px;
+}
+
+.icon-container {
+  :hover {
+    cursor: pointer;
+    stroke: rgb(80, 117, 144);
+  }
 }

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { Db, MongoClient } from "mongodb";
+import { Db, MongoClient, ObjectId } from "mongodb";
 import pino from "pino";
 import { NewPost } from "../../types/types";
 
@@ -70,5 +70,24 @@ export class PostServices {
     const result = await posts.insertOne(newPost);
 
     return result;
+  }
+
+  async changeUpvote(postId: string) {
+    this.logger.info("User called post-services /upvote");
+
+    try {
+      await this.connectDb();
+
+      const posts = this.db.collection("ht_posts");
+
+      const results = await posts.updateOne(
+        { _id: new ObjectId(postId) },
+        { $inc: { upvotes: 1 } }
+      );
+
+      return results;
+    } catch (err) {
+      this.logger.info(`There was an error: ${err}`);
+    }
   }
 }
